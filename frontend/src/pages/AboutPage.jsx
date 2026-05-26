@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Compass, Search, ArrowRight, CheckCircle, Users, Zap, Heart, Globe, Briefcase } from 'lucide-react';
+import { Compass, Search, ArrowRight, CheckCircle, Users, Zap, Heart, Globe, Briefcase, Star, MapPin } from 'lucide-react';
 
 export default function AboutPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const carouselImages = [
+    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1600&q=80',
+    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1600&q=80',
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80',
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [carouselImages.length]);
+
   const missionPoints = [
     {
       icon: Globe,
@@ -26,27 +41,6 @@ export default function AboutPage() {
     { number: '50K+', label: 'Viajantes Ativos' },
     { number: '100K+', label: 'Roteiros Criados' },
     { number: '4.8★', label: 'Avaliação Média' },
-  ];
-
-  const team = [
-    {
-      name: 'Ana Silva',
-      role: 'Fundadora & CEO',
-      bio: 'Apaixonada por viagens e tecnologia',
-      image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80',
-    },
-    {
-      name: 'Carlos Santos',
-      role: 'CTO & Co-fundador',
-      bio: 'Especialista em desenvolvimento web',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-    },
-    {
-      name: 'Marina Costa',
-      role: 'Design Lead',
-      bio: 'Criadora de experiências imersivas',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&q=80',
-    },
   ];
 
   return (
@@ -74,169 +68,82 @@ export default function AboutPage() {
         </div>
       </header>
 
-      {/* HERO SECTION */}
+      {/* IMMERSIVE HERO CAROUSEL */}
       <section style={styles.heroSection}>
-        <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle}>Sobre Rosa dos Ventos</h1>
-          <p style={styles.heroSubtitle}>
-            Transformando a forma como as pessoas planejam, organizam e vivem suas viagens
-          </p>
-        </div>
-      </section>
-
-      {/* MISSION SECTION */}
-      <section style={styles.missionSection}>
-        <div style={styles.sectionContainer}>
-          <div style={styles.missionLeft}>
-            <h2 style={styles.sectionTitle}>Nossa Missão</h2>
-            <p style={styles.sectionText}>
-              Rosa dos Ventos nasceu de uma simples ideia: criar uma plataforma que unisse todas as ferramentas necessárias para planejar uma viagem perfeita em um único lugar. Acreditamos que viajar deve ser uma experiência memorável, desde o planejamento até o retorno para casa.
-            </p>
-            <p style={styles.sectionText}>
-              Nosso objetivo é capacitar viajantes com tecnologia inteligente, design intuitivo e uma comunidade global de exploradores apaixonados pelo mundo.
-            </p>
-          </div>
-          <div style={styles.missionRight}>
+        <div style={styles.carouselContainer}>
+          {carouselImages.map((img, index) => (
             <div
+              key={index}
               style={{
-                ...styles.missionImage,
-                backgroundImage: 'url(https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80)',
+                ...styles.slide,
+                opacity: index === currentSlide ? 1 : 0,
+                backgroundImage: `url('${img}')`,
               }}
             />
-          </div>
-        </div>
-      </section>
-
-      {/* VALUES SECTION */}
-      <section style={styles.valuesSection}>
-        <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitleCenter}>Nossos Valores</h2>
-          <div style={styles.valuesGrid}>
-            {missionPoints.map((point, index) => {
-              const IconComponent = point.icon;
-              return (
-                <div key={index} style={styles.valueCard}>
-                  <div style={styles.valueIconContainer}>
-                    <IconComponent size={40} color="var(--primary)" />
-                  </div>
-                  <h3 style={styles.valueTitle}>{point.title}</h3>
-                  <p style={styles.valueDesc}>{point.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* EXPERIENCE SECTION */}
-      <section style={styles.experienceSection}>
-        <div style={styles.sectionContainer}>
-          <div style={styles.experienceLeft}>
-            <div
-              style={{
-                ...styles.experienceImage,
-                backgroundImage: 'url(https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80)',
-              }}
-            />
-          </div>
-          <div style={styles.experienceRight}>
-            <h2 style={styles.sectionTitle}>Experiência em Viagens</h2>
-            <p style={styles.sectionText}>
-              Cada membro do nosso time é um viajante apaixonado. Temos experiência em mais de 100 países e entendemos os desafios reais que os viajantes enfrentam.
+          ))}
+          <div style={styles.heroOverlay} />
+          <div style={styles.heroContent}>
+            <h1 style={styles.heroTitle}>Explorando o Mundo,<br />Criando Memórias</h1>
+            <p style={styles.heroSubtitle}>
+              Conheça a história por trás da Rosa dos Ventos e como estamos transformando a jornada de milhares de viajantes.
             </p>
-            <div style={styles.experienceFeatures}>
-              <div style={styles.featureItem}>
-                <CheckCircle size={20} color="var(--primary)" />
-                <span>Planejamento de roteiros personalizados</span>
-              </div>
-              <div style={styles.featureItem}>
-                <CheckCircle size={20} color="var(--primary)" />
-                <span>Controle detalhado de gastos por categoria</span>
-              </div>
-              <div style={styles.featureItem}>
-                <CheckCircle size={20} color="var(--primary)" />
-                <span>Salvamento de favoritos sincronizados</span>
-              </div>
-              <div style={styles.featureItem}>
-                <CheckCircle size={20} color="var(--primary)" />
-                <span>Interface intuitiva e responsiva</span>
-              </div>
-              <div style={styles.featureItem}>
-                <CheckCircle size={20} color="var(--primary)" />
-                <span>Comunidade global de viajantes</span>
-              </div>
+            <div style={styles.heroStats}>
+              {stats.map((stat, i) => (
+                <div key={i} style={styles.heroStatItem}>
+                  <span style={styles.statNum}>{stat.number}</span>
+                  <span style={styles.statLab}>{stat.label}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* STATS SECTION */}
-      <section style={styles.statsSection}>
+      {/* MISSION & EXPERIENCE INTEGRATED SECTION */}
+      <section style={styles.integratedSection}>
         <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitleCenter}>Nossos Números</h2>
-          <div style={styles.statsGrid}>
-            {stats.map((stat, index) => (
-              <div key={index} style={styles.statCard}>
-                <h3 style={styles.statNumber}>{stat.number}</h3>
-                <p style={styles.statLabel}>{stat.label}</p>
+          <div style={styles.contentGrid}>
+            {/* Nossa Missão */}
+            <div style={styles.missionBox}>
+              <div style={styles.badge}>NOSSA MISSÃO</div>
+              <h2 style={styles.sectionHeading}>Propósito que nos move</h2>
+              <p style={styles.sectionDesc}>
+                A Rosa dos Ventos nasceu da necessidade de simplificar o complexo. Acreditamos que o planejamento não deve ser um fardo, mas o início prazeroso de toda aventura. Nossa missão é democratizar o acesso a ferramentas de elite para organização de viagens.
+              </p>
+              <div style={styles.missionList}>
+                {missionPoints.map((point, idx) => {
+                  const Icon = point.icon;
+                  return (
+                    <div key={idx} style={styles.missionItem}>
+                      <div style={styles.iconCircle}><Icon size={20} color="var(--primary)" /></div>
+                      <div>
+                        <h4 style={styles.itemTitle}>{point.title}</h4>
+                        <p style={styles.itemText}>{point.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* TEAM SECTION */}
-      <section style={styles.teamSection}>
-        <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitleCenter}>Nosso Time</h2>
-          <div style={styles.teamGrid}>
-            {team.map((member, index) => (
-              <div key={index} style={styles.teamCard}>
-                <div
-                  style={{
-                    ...styles.teamImage,
-                    backgroundImage: `url('${member.image}')`,
-                  }}
-                />
-                <div style={styles.teamContent}>
-                  <h3 style={styles.teamName}>{member.name}</h3>
-                  <p style={styles.teamRole}>{member.role}</p>
-                  <p style={styles.teamBio}>{member.bio}</p>
+            {/* Experiência em Viagens */}
+            <div style={styles.experienceBox}>
+              <div style={styles.imageStack}>
+                <div style={{...styles.stackImg, backgroundImage: `url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=600&q=80')`, top: 0, left: 0}} />
+                <div style={{...styles.stackImg, backgroundImage: `url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=600&q=80')`, bottom: '-20px', right: '-20px', zIndex: 2, border: '4px solid #05070F'}} />
+              </div>
+              <div style={styles.experienceInfo}>
+                <h2 style={styles.sectionHeading}>Experiência em Viagens</h2>
+                <p style={styles.sectionDesc}>
+                  Nossa equipe é formada por nômades digitais e especialistas que já percorreram os sete continentes, trazendo bagagem real para cada funcionalidade.
+                </p>
+                <div style={styles.featureGrid}>
+                  <div style={styles.featItem}><CheckCircle size={18} color="var(--primary)" /> <span>Roteiros Curados</span></div>
+                  <div style={styles.featItem}><CheckCircle size={18} color="var(--primary)" /> <span>Gestão Financeira</span></div>
+                  <div style={styles.featItem}><CheckCircle size={18} color="var(--primary)" /> <span>Sincronização Cloud</span></div>
+                  <div style={styles.featItem}><CheckCircle size={18} color="var(--primary)" /> <span>Suporte Global</span></div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PLATFORM FEATURES */}
-      <section style={styles.platformSection}>
-        <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitleCenter}>Plataforma Moderna</h2>
-          <p style={styles.platformDesc}>
-            Rosa dos Ventos combina design premium com funcionalidades poderosas para oferecer a melhor experiência em planejamento de viagens.
-          </p>
-          <div style={styles.platformFeatures}>
-            <div style={styles.platformFeature}>
-              <div style={styles.platformFeatureIcon}>
-                <Briefcase size={32} color="var(--primary)" />
-              </div>
-              <h3>Dashboard Intuitivo</h3>
-              <p>Visualize todos os seus roteiros, gastos e favoritos em um painel organizado e elegante.</p>
-            </div>
-            <div style={styles.platformFeature}>
-              <div style={styles.platformFeatureIcon}>
-                <Users size={32} color="var(--primary)" />
-              </div>
-              <h3>Comunidade Ativa</h3>
-              <p>Conecte-se com viajantes do mundo inteiro e compartilhe dicas e experiências.</p>
-            </div>
-            <div style={styles.platformFeature}>
-              <div style={styles.platformFeatureIcon}>
-                <Zap size={32} color="var(--primary)" />
-              </div>
-              <h3>Tecnologia Avançada</h3>
-              <p>Desenvolvido com as tecnologias mais modernas para garantir performance e segurança.</p>
             </div>
           </div>
         </div>
@@ -244,19 +151,12 @@ export default function AboutPage() {
 
       {/* CTA SECTION */}
       <section style={styles.ctaSection}>
-        <div style={styles.ctaContent}>
-          <h2 style={styles.ctaTitle}>Pronto para começar sua jornada?</h2>
-          <p style={styles.ctaDesc}>
-            Junte-se a milhares de viajantes que já transformaram suas férias com Rosa dos Ventos
-          </p>
-          <div style={styles.ctaButtons}>
-            <Link to="/register" className="btn btn-primary" style={styles.ctaBtnPrimary}>
-              Criar Conta Agora
-            </Link>
-            <Link to="/destinos" className="btn btn-outline" style={styles.ctaBtnOutline}>
-              Explorar Destinos
-            </Link>
-          </div>
+        <div style={styles.ctaCard}>
+          <h2 style={styles.ctaTitle}>Pronto para sua próxima aventura?</h2>
+          <p style={styles.ctaSubtitle}>Junte-se a 50.000+ viajantes e comece a planejar hoje mesmo.</p>
+          <Link to="/register" style={styles.ctaBtn}>
+            COMEÇAR AGORA <ArrowRight size={20} style={{marginLeft: '10px'}} />
+          </Link>
         </div>
       </section>
 
@@ -277,12 +177,10 @@ export default function AboutPage() {
           <div style={styles.footerSection}>
             <h4 style={styles.footerTitle}>Contato</h4>
             <p style={styles.footerText}>contato@rosadosventos.com.br</p>
-            <p style={styles.footerText}>+55 (11) 9999-9999</p>
           </div>
         </div>
         <div style={styles.footerBottom}>
           <span>© 2026 Rosa dos Ventos. Todos os direitos reservados.</span>
-          <span>Criado com ❤️ para viajantes apaixonados</span>
         </div>
       </footer>
     </div>
@@ -293,7 +191,6 @@ const styles = {
   container: {
     minHeight: '100vh',
     backgroundColor: '#05070F',
-    backgroundImage: `radial-gradient(circle at 50% 10%, rgba(37, 99, 235, 0.12) 0%, transparent 60%)`,
     color: '#FFF',
     fontFamily: 'var(--font-body)',
     overflowX: 'hidden',
@@ -303,379 +200,65 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: '1.5rem 4rem',
-    backgroundColor: 'rgba(5, 7, 15, 0.5)',
-    backdropFilter: 'blur(10px)',
+    backgroundColor: 'rgba(5, 7, 15, 0.7)',
+    backdropFilter: 'blur(12px)',
     borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-    position: 'sticky',
+    position: 'fixed',
     top: 0,
-    zIndex: 100,
-  },
-  logo: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.75rem',
-  },
-  logoText: {
-    fontSize: '1.1rem',
-    fontWeight: '800',
-    letterSpacing: '0.05em',
-    color: '#FFF',
-  },
-  nav: {
-    display: 'flex',
-    gap: '2.5rem',
-  },
-  activeNavLink: {
-    fontSize: '0.85rem',
-    fontWeight: '700',
-    color: '#FFF',
-    letterSpacing: '0.1em',
-    borderBottom: '2px solid var(--primary)',
-    paddingBottom: '4px',
-    cursor: 'pointer',
-    transition: 'var(--transition-fast)',
-    textDecoration: 'none',
-  },
-  navLink: {
-    fontSize: '0.85rem',
-    fontWeight: '600',
-    color: '#94A3B8',
-    letterSpacing: '0.1em',
-    cursor: 'pointer',
-    transition: 'var(--transition-fast)',
-    textDecoration: 'none',
-  },
-  headerRight: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1.25rem',
-  },
-  loginBtn: {
-    padding: '0.45rem 1.25rem',
-    fontSize: '0.85rem',
-    border: '1px solid rgba(255, 255, 255, 0.15)',
-    color: '#FFF',
-  },
-  registerBtn: {
-    padding: '0.45rem 1.25rem',
-    fontSize: '0.85rem',
-  },
-  heroSection: {
-    padding: '6rem 4rem',
-    textAlign: 'center',
-    minHeight: '50vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundImage: `linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%)`,
-  },
-  heroContent: {
-    maxWidth: '800px',
-  },
-  heroTitle: {
-    fontSize: '3.5rem',
-    fontWeight: '800',
-    marginBottom: '1rem',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  heroSubtitle: {
-    fontSize: '1.3rem',
-    color: '#94A3B8',
-    lineHeight: '1.6',
-  },
-  sectionContainer: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  missionSection: {
-    padding: '6rem 4rem',
-  },
-  missionLeft: {
-    flex: 1,
-  },
-  missionRight: {
-    flex: 1,
-  },
-  sectionTitle: {
-    fontSize: '2.5rem',
-    fontWeight: '800',
-    marginBottom: '1.5rem',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  sectionTitleCenter: {
-    fontSize: '2.5rem',
-    fontWeight: '800',
-    marginBottom: '3rem',
-    textAlign: 'center',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  sectionText: {
-    fontSize: '1.05rem',
-    color: '#94A3B8',
-    lineHeight: '1.8',
-    marginBottom: '1.5rem',
-  },
-  missionImage: {
     width: '100%',
-    height: '400px',
-    borderRadius: 'var(--radius-lg)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-    border: '1px solid rgba(255,255,255,0.1)',
+    zIndex: 1000,
   },
-  valuesSection: {
-    padding: '6rem 4rem',
-    backgroundColor: 'rgba(15, 23, 42, 0.3)',
-  },
-  valuesGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '2rem',
-  },
-  valueCard: {
-    padding: '2.5rem',
-    borderRadius: 'var(--radius-lg)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    textAlign: 'center',
-    transition: 'var(--transition)',
-  },
-  valueIconContainer: {
-    width: '70px',
-    height: '70px',
-    borderRadius: '50%',
-    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '0 auto 1.5rem',
-  },
-  valueTitle: {
-    fontSize: '1.3rem',
-    fontWeight: '700',
-    marginBottom: '0.75rem',
-  },
-  valueDesc: {
-    fontSize: '0.95rem',
-    color: '#94A3B8',
-    lineHeight: '1.6',
-  },
-  experienceSection: {
-    padding: '6rem 4rem',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '4rem',
-  },
-  experienceLeft: {
-    flex: 1,
-  },
-  experienceRight: {
-    flex: 1,
-  },
-  experienceImage: {
-    width: '100%',
-    height: '400px',
-    borderRadius: 'var(--radius-lg)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-    border: '1px solid rgba(255,255,255,0.1)',
-  },
-  experienceFeatures: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.25rem',
-    marginTop: '2rem',
-  },
-  featureItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    fontSize: '1rem',
-  },
-  statsSection: {
-    padding: '6rem 4rem',
-    backgroundColor: 'rgba(37, 99, 235, 0.05)',
-  },
-  statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '2rem',
-  },
-  statCard: {
-    textAlign: 'center',
-    padding: '2.5rem',
-    borderRadius: 'var(--radius-lg)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-  },
-  statNumber: {
-    fontSize: '2.5rem',
-    fontWeight: '800',
-    color: 'var(--primary)',
-    marginBottom: '0.5rem',
-  },
-  statLabel: {
-    fontSize: '1rem',
-    color: '#94A3B8',
-  },
-  teamSection: {
-    padding: '6rem 4rem',
-  },
-  teamGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '2rem',
-  },
-  teamCard: {
-    borderRadius: 'var(--radius-lg)',
-    overflow: 'hidden',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    transition: 'var(--transition)',
-  },
-  teamImage: {
-    width: '100%',
-    height: '300px',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  teamContent: {
-    padding: '2rem',
-  },
-  teamName: {
-    fontSize: '1.3rem',
-    fontWeight: '700',
-    marginBottom: '0.5rem',
-  },
-  teamRole: {
-    fontSize: '0.9rem',
-    color: 'var(--primary)',
-    fontWeight: '600',
-    marginBottom: '0.75rem',
-  },
-  teamBio: {
-    fontSize: '0.95rem',
-    color: '#94A3B8',
-  },
-  platformSection: {
-    padding: '6rem 4rem',
-    backgroundColor: 'rgba(15, 23, 42, 0.3)',
-  },
-  platformDesc: {
-    fontSize: '1.1rem',
-    color: '#94A3B8',
-    textAlign: 'center',
-    maxWidth: '600px',
-    margin: '0 auto 3rem',
-    lineHeight: '1.6',
-  },
-  platformFeatures: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '2rem',
-  },
-  platformFeature: {
-    padding: '2.5rem',
-    borderRadius: 'var(--radius-lg)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    textAlign: 'center',
-  },
-  platformFeatureIcon: {
-    width: '70px',
-    height: '70px',
-    borderRadius: '50%',
-    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '0 auto 1.5rem',
-  },
-  ctaSection: {
-    padding: '6rem 4rem',
-    textAlign: 'center',
-  },
-  ctaContent: {
-    maxWidth: '700px',
-    margin: '0 auto',
-  },
-  ctaTitle: {
-    fontSize: '2.5rem',
-    fontWeight: '800',
-    marginBottom: '1rem',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  ctaDesc: {
-    fontSize: '1.1rem',
-    color: '#94A3B8',
-    marginBottom: '2rem',
-    lineHeight: '1.6',
-  },
-  ctaButtons: {
-    display: 'flex',
-    gap: '1.5rem',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-  },
-  ctaBtnPrimary: {
-    padding: '1rem 2.5rem',
-    fontSize: '1rem',
-  },
-  ctaBtnOutline: {
-    padding: '1rem 2.5rem',
-    fontSize: '1rem',
-  },
-  footer: {
-    backgroundColor: 'rgba(15, 23, 42, 0.8)',
-    borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-    padding: '4rem 4rem 2rem',
-  },
-  footerContent: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '3rem',
-    maxWidth: '1200px',
-    margin: '0 auto 2rem',
-  },
-  footerSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.75rem',
-  },
-  footerTitle: {
-    fontSize: '1rem',
-    fontWeight: '700',
-    marginBottom: '0.5rem',
-  },
-  footerText: {
-    fontSize: '0.9rem',
-    color: '#94A3B8',
-  },
-  footerLink: {
-    fontSize: '0.9rem',
-    color: '#94A3B8',
-    transition: 'var(--transition-fast)',
-    textDecoration: 'none',
-  },
-  footerBottom: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingTop: '2rem',
-    borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-    fontSize: '0.85rem',
-    color: '#64748B',
-    flexWrap: 'wrap',
-    gap: '1rem',
-  },
+  logo: { display: 'flex', alignItems: 'center', gap: '0.75rem' },
+  logoText: { fontSize: '1.1rem', fontWeight: '800', letterSpacing: '0.05em' },
+  nav: { display: 'flex', gap: '2.5rem' },
+  navLink: { fontSize: '0.85rem', fontWeight: '600', color: '#94A3B8', textDecoration: 'none', transition: '0.3s' },
+  activeNavLink: { fontSize: '0.85rem', fontWeight: '700', color: '#FFF', textDecoration: 'none', borderBottom: '2px solid var(--primary)', paddingBottom: '4px' },
+  headerRight: { display: 'flex', alignItems: 'center', gap: '1.25rem' },
+  loginBtn: { padding: '0.5rem 1.5rem', fontSize: '0.85rem', color: '#FFF', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '6px' },
+  registerBtn: { padding: '0.5rem 1.5rem', fontSize: '0.85rem', backgroundColor: 'var(--primary)', color: '#FFF', textDecoration: 'none', borderRadius: '6px' },
+  
+  heroSection: { height: '70vh', position: 'relative', marginTop: '0' },
+  carouselContainer: { width: '100%', height: '100%', position: 'relative' },
+  slide: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundSize: 'cover', backgroundPosition: 'center', transition: 'opacity 1.5s ease-in-out' },
+  heroOverlay: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(to bottom, rgba(5,7,15,0.4) 0%, rgba(5,7,15,0.9) 100%)' },
+  heroContent: { position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', textAlign: 'center', padding: '0 2rem' },
+  heroTitle: { fontSize: '4.5rem', fontWeight: '900', lineHeight: '1.1', marginBottom: '1.5rem', background: 'linear-gradient(to right, #FFF, #93C5FD)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' },
+  heroSubtitle: { fontSize: '1.2rem', color: '#94A3B8', maxWidth: '700px', marginBottom: '3rem' },
+  heroStats: { display: 'flex', gap: '4rem' },
+  heroStatItem: { display: 'flex', flexDirection: 'column', gap: '0.25rem' },
+  statNum: { fontSize: '2rem', fontWeight: '800', color: 'var(--primary)' },
+  statLab: { fontSize: '0.8rem', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.1em' },
+
+  integratedSection: { padding: '8rem 4rem' },
+  sectionContainer: { maxWidth: '1200px', margin: '0 auto' },
+  contentGrid: { display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '6rem', alignItems: 'start' },
+  badge: { display: 'inline-block', padding: '0.4rem 1rem', backgroundColor: 'rgba(37, 99, 235, 0.1)', color: 'var(--primary)', borderRadius: '20px', fontSize: '0.75rem', fontWeight: '700', marginBottom: '1.5rem' },
+  sectionHeading: { fontSize: '3rem', fontWeight: '800', marginBottom: '1.5rem' },
+  sectionDesc: { fontSize: '1.1rem', color: '#94A3B8', lineHeight: '1.8', marginBottom: '3rem' },
+  missionList: { display: 'flex', flexDirection: 'column', gap: '2rem' },
+  missionItem: { display: 'flex', gap: '1.5rem', alignItems: 'start' },
+  iconCircle: { width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
+  itemTitle: { fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.5rem' },
+  itemText: { fontSize: '0.9rem', color: '#64748B', lineHeight: '1.5' },
+
+  experienceBox: { position: 'relative' },
+  imageStack: { position: 'relative', height: '400px', marginBottom: '4rem' },
+  stackImg: { position: 'absolute', width: '80%', height: '300px', borderRadius: '12px', backgroundSize: 'cover', backgroundPosition: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' },
+  experienceInfo: { marginTop: '2rem' },
+  featureGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' },
+  featItem: { display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem', color: '#E2E8F0' },
+
+  ctaSection: { padding: '4rem 4rem 8rem' },
+  ctaCard: { background: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)', padding: '5rem', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 30px 60px rgba(0,0,0,0.5)' },
+  ctaTitle: { fontSize: '2.5rem', fontWeight: '800', marginBottom: '1rem' },
+  ctaSubtitle: { fontSize: '1.1rem', color: '#94A3B8', marginBottom: '2.5rem' },
+  ctaBtn: { display: 'inline-flex', alignItems: 'center', backgroundColor: 'var(--primary)', color: '#FFF', padding: '1.2rem 3rem', borderRadius: '50px', fontWeight: '700', textDecoration: 'none', transition: '0.3s', boxShadow: '0 10px 20px rgba(37, 99, 235, 0.3)' },
+
+  footer: { padding: '5rem 4rem 2rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)' },
+  footerContent: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '4rem', maxWidth: '1200px', margin: '0 auto 4rem' },
+  footerSection: { display: 'flex', flexDirection: 'column', gap: '1rem' },
+  footerTitle: { fontSize: '1.1rem', fontWeight: '700' },
+  footerText: { color: '#94A3B8', fontSize: '0.9rem' },
+  footerLink: { color: '#94A3B8', textDecoration: 'none', fontSize: '0.9rem' },
+  footerBottom: { textAlign: 'center', paddingTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.05)', color: '#64748B', fontSize: '0.8rem' },
 };
