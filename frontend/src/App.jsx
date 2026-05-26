@@ -4,7 +4,10 @@ import useAuth from './hooks/useAuth';
 import Sidebar from './components/Sidebar';
 
 // Páginas Publicas
-import LandingPage from './pages/LandingPage';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import DestinationsPage from './pages/DestinationsPage';
+import ReviewsPage from './pages/ReviewsPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
@@ -72,7 +75,10 @@ function MainApp() {
   return (
     <Routes>
       {/* Rotas Públicas */}
-      <Route path="/" element={<LandingPage />} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/sobre" element={<AboutPage />} />
+      <Route path="/destinos" element={<DestinationsPage />} />
+      <Route path="/avaliacoes" element={<ReviewsPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
