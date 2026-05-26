@@ -8,12 +8,12 @@ export default function DestinationsPage() {
   const [showFilters, setShowFilters] = useState(false);
 
   const categories = [
-    { id: 'all', name: 'Todos', icon: '🌍' },
-    { id: 'beach', name: 'Praias', icon: '🏖️' },
-    { id: 'mountain', name: 'Montanhas', icon: '⛰️' },
-    { id: 'city', name: 'Cidades', icon: '🏙️' },
-    { id: 'adventure', name: 'Aventura', icon: '🧗' },
-    { id: 'culture', name: 'Cultura', icon: '🎭' },
+    { id: 'all', name: 'Todos' },
+    { id: 'beach', name: 'Praias' },
+    { id: 'mountain', name: 'Montanhas' },
+    { id: 'city', name: 'Cidades' },
+    { id: 'adventure', name: 'Aventura' },
+    { id: 'culture', name: 'Cultura' },
   ];
 
   const destinations = [
@@ -61,9 +61,21 @@ export default function DestinationsPage() {
       rating: 4.9,
       reviews: 2560,
       popularity: 'Muito Popular',
-      image: 'https://images.unsplash.com/photo-1540959375944-7049f642e9a0?auto=format&fit=crop&w=600&q=80',
-      description: 'Modernidade e tradição em harmonia. Tecnologia, templos e gastronomia',
+      image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80',
+      description: 'A metrópole que nunca dorme, onde arranha-céus neon encontram santuários serenos.',
       visitors: '30K+',
+    },
+    {
+      id: 13,
+      name: 'Roma',
+      country: 'Itália',
+      category: 'culture',
+      rating: 4.9,
+      reviews: 4120,
+      popularity: 'Lendário',
+      image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80',
+      description: 'O museu a céu aberto. Explore o Coliseu, o Vaticano e a culinária italiana autêntica.',
+      visitors: '50K+',
     },
     {
       id: 5,
@@ -109,7 +121,7 @@ export default function DestinationsPage() {
       rating: 4.7,
       reviews: 2890,
       popularity: 'Muito Popular',
-      image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80',
       description: 'Praias paradisíacas, templos budistas e vida noturna vibrante',
       visitors: '35K+',
     },
@@ -121,7 +133,7 @@ export default function DestinationsPage() {
       rating: 4.8,
       reviews: 2450,
       popularity: 'Muito Popular',
-      image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=800&q=80',
       description: 'Arquitetura de Gaudí, praias urbanas e energia catalã contagiante',
       visitors: '32K+',
     },
@@ -145,7 +157,7 @@ export default function DestinationsPage() {
       rating: 4.7,
       reviews: 1920,
       popularity: 'Popular',
-      image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80',
+      image: 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=80',
       description: 'Medinas coloridas, desertos do Saara e arquitetura islâmica fascinante',
       visitors: '20K+',
     },
@@ -230,17 +242,17 @@ export default function DestinationsPage() {
         {/* CATEGORIES */}
         <div style={styles.categoriesContainer}>
           {categories.map((cat) => (
-            <button
+              <button
               key={cat.id}
               style={{
                 ...styles.categoryBtn,
                 backgroundColor: selectedCategory === cat.id ? 'var(--primary)' : 'rgba(255,255,255,0.05)',
                 borderColor: selectedCategory === cat.id ? 'var(--primary)' : 'rgba(255,255,255,0.1)',
                 color: selectedCategory === cat.id ? '#FFF' : '#94A3B8',
+                padding: '0.75rem 1.5rem',
               }}
               onClick={() => setSelectedCategory(cat.id)}
             >
-              <span style={{ fontSize: '1.2rem' }}>{cat.icon}</span>
               {cat.name}
             </button>
           ))}

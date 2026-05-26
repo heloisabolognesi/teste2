@@ -75,8 +75,8 @@ export default function HomePage() {
       country: 'Japão',
       rating: 4.9,
       reviews: 2560,
-      image: 'https://images.unsplash.com/photo-1540959375944-7049f642e9a0?auto=format&fit=crop&w=500&q=80',
-      description: 'Modernidade e tradição em harmonia',
+      image: 'https://images.unsplash.com/photo-1540959375944-7049f642e9a0?auto=format&fit=crop&w=800&q=80',
+      description: 'A fascinante mistura entre tecnologia futurista e templos ancestrais.',
     },
   ];
 
@@ -282,16 +282,22 @@ export default function HomePage() {
           </div>
           <div style={styles.immersiveRight}>
             <div style={styles.videoCard}>
-              <div
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
                 style={{
-                  ...styles.videoBg,
-                  backgroundImage: 'url(https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80)',
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: 'var(--radius-lg)',
                 }}
-              />
+              >
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-busy-city-street-at-night-4042-large.mp4" type="video/mp4" />
+                Seu navegador não suporta vídeos.
+              </video>
               <div style={styles.videoOverlay} />
-              <div style={styles.playBtnContainer}>
-                <Play size={24} fill="#FFF" color="#FFF" />
-              </div>
             </div>
           </div>
         </div>
