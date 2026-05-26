@@ -4,7 +4,7 @@ import api from '../services/api';
 import StatCard from '../components/StatCard';
 import TripCard from '../components/TripCard';
 import Modal from '../components/Modal';
-import { Compass, Calendar, DollarSign, ListTodo, Landmark, ArrowRight, Loader2, PieChart, TrendingUp, AlertCircle } from 'lucide-react';
+import { Compass, Calendar, DollarSign, ListTodo, Landmark, ArrowRight, Loader2, PieChart, TrendingUp, AlertCircle, Utensils, Coffee, Plane, Hotel, ShoppingBag, MoreHorizontal } from 'lucide-react';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState(null);
@@ -109,6 +109,18 @@ export default function DashboardPage() {
     });
   };
 
+  // Ícones de Categoria
+  const getCategoryIcon = (category) => {
+    switch (category) {
+      case 'alimentacao': return <Utensils size={16} />;
+      case 'transporte': return <Plane size={16} />;
+      case 'hospedagem': return <Hotel size={16} />;
+      case 'compras': return <ShoppingBag size={16} />;
+      case 'passeio': return <Compass size={16} />;
+      default: return <Coffee size={16} />;
+    }
+  };
+
   // Processar distribuição de gastos
   const getGastosData = () => {
     if (!stats || !stats.gastosPorCategoria || stats.gastosPorCategoria.length === 0) {
@@ -189,6 +201,7 @@ export default function DashboardPage() {
       </div>
 
       <div style={styles.analyticsSection}>
+        {/* Gráfico de Distribuição */}
         <div className="glass" style={styles.chartCard}>
           <div style={styles.chartHeader}>
             <div style={styles.chartIconWrapper}>
@@ -219,6 +232,33 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Lista de Gastos Gerais (NOVO) */}
+        <div className="glass" style={styles.chartCard}>
+          <div style={styles.chartHeader}>
+            <div style={styles.chartIconWrapper}>
+              <DollarSign size={18} color="#10B981" />
+            </div>
+            <h3 style={styles.chartTitle}>Gastos Gerais de Todas as Viagens</h3>
+          </div>
+          <div style={styles.detailedGastosList}>
+            {stats?.gastosDetalhados?.length === 0 ? (
+              <p style={styles.emptyText}>Nenhum gasto detalhado encontrado.</p>
+            ) : (
+              stats?.gastosDetalhados?.map((gasto, idx) => (
+                <div key={gasto.id} style={styles.gastoRow}>
+                  <div style={styles.gastoIcon}>{getCategoryIcon(gasto.categoria)}</div>
+                  <div style={styles.gastoInfo}>
+                    <span style={styles.gastoDesc}>{gasto.descricao}</span>
+                    <span style={styles.gastoViagem}>{gasto.viagem_nome}</span>
+                  </div>
+                  <span style={styles.gastoValor}>{formatCurrency(gasto.valor)}</span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Progresso de Roteiros */}
         <div className="glass" style={styles.chartCard}>
           <div style={styles.chartHeader}>
             <div style={styles.chartIconWrapper}>
@@ -353,20 +393,27 @@ const styles = {
   title: { fontSize: '1.75rem', fontWeight: '700', color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: '0.35rem' },
   subtitle: { fontSize: '0.9rem', color: 'var(--text-secondary)' },
   statsGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '2rem' },
-  analyticsSection: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem', marginBottom: '3rem' },
-  chartCard: { padding: '1.5rem', borderRadius: 'var(--radius-lg)', backgroundColor: 'var(--bg-card)' },
+  analyticsSection: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '1.5rem', marginBottom: '3rem' },
+  chartCard: { padding: '1.5rem', borderRadius: 'var(--radius-lg)', backgroundColor: 'var(--bg-card)', display: 'flex', flexDirection: 'column' },
   chartHeader: { display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' },
   chartIconWrapper: { width: '36px', height: '36px', borderRadius: '10px', backgroundColor: 'rgba(255, 255, 255, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' },
   chartTitle: { fontSize: '1rem', fontWeight: '600', color: 'var(--text-primary)' },
   chartContent: { minHeight: '180px', display: 'flex', alignItems: 'center' },
   barChart: { width: '100%', display: 'flex', flexDirection: 'column', gap: '1rem' },
   barItem: { width: '100%' },
-  barLabelContainer: { display: 'flex', justifyContext: 'space-between', marginBottom: '0.4rem' },
+  barLabelContainer: { display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' },
   barLabel: { fontSize: '0.8rem', color: 'var(--text-secondary)' },
   barValue: { fontSize: '0.8rem', fontWeight: '600', color: 'var(--text-primary)' },
   barTrack: { height: '6px', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '10px', overflow: 'hidden' },
   barFill: { height: '100%', borderRadius: '10px', transition: 'width 1s ease-out' },
   emptyChartMessage: { width: '100%', textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' },
+  detailedGastosList: { display: 'flex', flexDirection: 'column', gap: '0.75rem', maxHeight: '250px', overflowY: 'auto', paddingRight: '0.5rem' },
+  gastoRow: { display: 'flex', alignItems: 'center', gap: '1rem', padding: '0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' },
+  gastoIcon: { width: '32px', height: '32px', borderRadius: '50%', backgroundColor: 'rgba(37, 99, 235, 0.1)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
+  gastoInfo: { flex: 1, display: 'flex', flexDirection: 'column' },
+  gastoDesc: { fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-primary)' },
+  gastoViagem: { fontSize: '0.75rem', color: 'var(--text-muted)' },
+  gastoValor: { fontSize: '0.85rem', fontWeight: '700', color: 'var(--success)' },
   progressCircleContainer: { display: 'flex', alignItems: 'center', gap: '2rem', width: '100%' },
   progressCircle: { width: '120px', height: '120px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'background 1s ease-in-out' },
   progressInner: { width: '100px', height: '100px', borderRadius: '50%', backgroundColor: 'var(--bg-card)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 2 },

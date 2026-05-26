@@ -38,7 +38,7 @@ exports.getDashboardStats = async (req, res, next) => {
       [userId]
     );
 
-    // 5. Atividades totais vs concluídas (Usando nomes de colunas simples)
+    // 5. Atividades totais vs concluídas
     const [atividadesCount] = await db.query(
       `SELECT 
          COUNT(*) as total,
@@ -63,6 +63,23 @@ exports.getDashboardStats = async (req, res, next) => {
       [userId]
     );
 
+    // 7. Gastos detalhados (Últimos 10 gastos de todas as viagens para visualização no dashboard)
+    const [gastosDetalhados] = await db.query(
+      `SELECT 
+         g.id,
+         g.descricao, 
+         g.valor, 
+         g.categoria, 
+         g.data_gasto as data,
+         v.nome as viagem_nome
+       FROM gastos g 
+       JOIN viagens v ON g.id_viagem = v.id 
+       WHERE v.id_usuario = ? 
+       ORDER BY g.data_gasto DESC, g.id DESC
+       LIMIT 10`,
+      [userId]
+    );
+
     res.status(200).json({
       stats: {
         totalViagens,
@@ -70,7 +87,8 @@ exports.getDashboardStats = async (req, res, next) => {
         totalGastos,
         totalAtividades,
         atividadesConcluidas,
-        gastosPorCategoria
+        gastosPorCategoria,
+        gastosDetalhados
       },
       proximasViagens
     });
