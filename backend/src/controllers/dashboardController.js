@@ -29,7 +29,7 @@ exports.getDashboardStats = async (req, res, next) => {
     );
     const totalGastos = Number(gastosSum[0].totalGastos || 0);
 
-    // 4. Próximas viagens (com data de ida igual ou posterior a hoje, ordenadas por data de ida)
+    // 4. Próximas viagens
     const [proximasViagens] = await db.query(
       `SELECT * FROM viagens 
        WHERE id_usuario = ? AND data_ida >= CURRENT_DATE() 
@@ -38,18 +38,18 @@ exports.getDashboardStats = async (req, res, next) => {
       [userId]
     );
 
-    // 5. Total de atividades pendentes vs concluídas no roteiro geral do usuário
+    // 5. Atividades totais vs concluídas (Usando nomes de colunas simples)
     const [atividadesCount] = await db.query(
       `SELECT 
          COUNT(*) as total,
-         SUM(CASE WHEN r.concluida = 1 THEN 1 ELSE 0 END) as concluídas
+         SUM(CASE WHEN r.concluida = 1 THEN 1 ELSE 0 END) as concluidas
        FROM roteiro_atividades r
        JOIN viagens v ON r.id_viagem = v.id
        WHERE v.id_usuario = ?`,
       [userId]
     );
     const totalAtividades = atividadesCount[0].total || 0;
-    const atividadesConcluidas = Number(atividadesCount[0].concluídas || 0);
+    const atividadesConcluidas = Number(atividadesCount[0].concluidas || 0);
 
     // 6. Distribuição de gastos por categoria
     const [gastosPorCategoria] = await db.query(
