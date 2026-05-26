@@ -294,10 +294,9 @@ export default function HomePage() {
                   borderRadius: 'var(--radius-lg)',
                 }}
               >
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-top-view-of-a-busy-city-street-at-night-4042-large.mp4" type="video/mp4" />
+                <source src="https://assets.mixkit.co/videos/4521/4521-720.mp4" type="video/mp4" />
                 Seu navegador não suporta vídeos.
               </video>
-              <div style={styles.videoOverlay} />
             </div>
           </div>
         </div>
