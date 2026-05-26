@@ -252,15 +252,35 @@ export default function ViagemDetalhePage() {
   const gastoTotal = financeiro.totalGasto || 0;
   const pctGasto = orcamentoTotal > 0 ? Math.min(Math.round((gastoTotal / orcamentoTotal) * 100), 100) : 0;
   
+  // Renderizar o badge de status com cores dinâmicas
+  const renderStatusBadge = (status) => {
+    const statusMap = {
+      planejada: { label: 'Planejada', color: '#3B82F6', bg: 'rgba(59, 130, 246, 0.15)', glow: '0 0 12px rgba(59, 130, 246, 0.3)' },
+      em_curso: { label: 'Em Curso', color: '#10B981', bg: 'rgba(16, 185, 129, 0.15)', glow: '0 0 12px rgba(16, 185, 129, 0.3)' },
+      concluida: { label: 'Concluída', color: '#8B5CF6', bg: 'rgba(139, 92, 246, 0.15)', glow: '0 0 12px rgba(139, 92, 246, 0.3)' },
+      cancelada: { label: 'Cancelada', color: '#EF4444', bg: 'rgba(239, 68, 68, 0.15)', glow: '0 0 12px rgba(239, 68, 68, 0.3)' },
+    };
+    const current = statusMap[status] || statusMap.planejada;
+    return (
+      <span style={{ ...styles.badge, color: current.color, backgroundColor: current.bg, boxShadow: current.glow }}>
+        <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: current.color, marginRight: '8px', display: 'inline-block' }} />
+        {current.label}
+      </span>
+    );
+  };
+
   // Imagem do header
   const coverImg = viagem.imagem_url || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80';
 
   return (
     <div className="fade-in" style={styles.page}>
       {/* Botão de Voltar */}
-      <Link to="/viagens" style={styles.backBtn}>
-        <ArrowLeft size={16} /> Voltar para Viagens
-      </Link>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+        <Link to="/viagens" style={styles.backBtn}>
+          <ArrowLeft size={16} /> Voltar para Viagens
+        </Link>
+        {renderStatusBadge(viagem.status)}
+      </div>
 
       {/* 1. HEADER HERO DA VIAGEM */}
       <div className="glass" style={{ ...styles.heroHeader, backgroundImage: `url(${coverImg})` }}>
@@ -766,6 +786,17 @@ const styles = {
     marginTop: '0.25rem',
     maxWidth: '800px',
     lineHeight: '1.5',
+  },
+  badge: {
+    padding: '0.4rem 1rem',
+    borderRadius: 'var(--radius-full)',
+    fontSize: '0.75rem',
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em',
+    display: 'inline-flex',
+    alignItems: 'center',
+    border: '1px solid rgba(255,255,255,0.05)',
   },
   tabsContainer: {
     display: 'flex',
