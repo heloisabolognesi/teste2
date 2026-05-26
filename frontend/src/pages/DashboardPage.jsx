@@ -3,28 +3,103 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import StatCard from '../components/StatCard';
 import TripCard from '../components/TripCard';
-import { Compass, Calendar, DollarSign, ListTodo, MapPin, Landmark, ArrowRight, Loader2, PieChart, TrendingUp, BarChart3 } from 'lucide-react';
+import Modal from '../components/Modal';
+import { Compass, Calendar, DollarSign, ListTodo, Landmark, ArrowRight, Loader2, PieChart, TrendingUp, AlertCircle } from 'lucide-react';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState(null);
   const [proximas, setProximas] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Estados para modal de edição (copiado da ViagensPage para consistência)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingTrip, setEditingTrip] = useState(null);
+  const [nome, setNome] = useState('');
+  const [destino, setDestino] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [orcamento, setOrcamento] = useState('');
+  const [dataIda, setDataIda] = useState('');
+  const [dataVolta, setDataVolta] = useState('');
+  const [imagemUrl, setImagemUrl] = useState('');
+  const [status, setStatus] = useState('planejada');
+  const [formError, setFormError] = useState('');
+
   // Carregar dados agregados do backend
   useEffect(() => {
-    async function loadStats() {
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get('/dashboard');
+      setStats(response.data.stats);
+      setProximas(response.data.proximasViagens);
+    } catch (error) {
+      console.error('Erro ao carregar dados do dashboard:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Abrir modal para editar
+  const handleOpenEdit = (viagem) => {
+    setEditingTrip(viagem);
+    setNome(viagem.nome);
+    setDestino(viagem.destino);
+    setDescricao(viagem.descricao || '');
+    setOrcamento(viagem.orcamento || '');
+    setDataIda(viagem.data_ida ? viagem.data_ida.split('T')[0] : '');
+    setDataVolta(viagem.data_volta ? viagem.data_volta.split('T')[0] : '');
+    setImagemUrl(viagem.imagem_url || '');
+    setStatus(viagem.status);
+    setFormError('');
+    setIsModalOpen(true);
+  };
+
+  // Salvar Edição
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setFormError('');
+
+    if (!nome || !destino || !dataIda || !dataVolta) {
+      setFormError('Por favor, preencha todos os campos obrigatórios (*).');
+      return;
+    }
+
+    const payload = {
+      nome,
+      destino,
+      descricao,
+      orcamento: orcamento ? Number(orcamento) : 0,
+      data_ida: dataIda,
+      data_volta: dataVolta,
+      imagem_url: imagemUrl,
+      status
+    };
+
+    try {
+      await api.put(`/viagens/${editingTrip.id}`, payload);
+      setIsModalOpen(false);
+      loadDashboardData();
+    } catch (error) {
+      console.error('Erro ao salvar viagem:', error);
+      setFormError(error.response?.data?.error || 'Erro ao salvar a viagem.');
+    }
+  };
+
+  // Excluir Viagem
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza que deseja excluir esta viagem?')) {
       try {
-        const response = await api.get('/dashboard');
-        setStats(response.data.stats);
-        setProximas(response.data.proximasViagens);
+        await api.delete(`/viagens/${id}`);
+        loadDashboardData();
       } catch (error) {
-        console.error('Erro ao carregar dados do dashboard:', error);
-      } finally {
-        setLoading(false);
+        console.error('Erro ao deletar viagem:', error);
+        alert('Erro ao excluir viagem.');
       }
     }
-    loadStats();
-  }, []);
+  };
 
   // Formatar moeda
   const formatCurrency = (value) => {
@@ -45,7 +120,7 @@ export default function DashboardPage() {
       ];
     }
 
-    const total = stats.totalGastos || 1; // evitar divisão por zero
+    const total = stats.totalGastos || 1;
     const categories = {
       hospedagem: { label: 'Hospedagem', color: '#3B82F6' },
       transporte: { label: 'Transporte', color: '#10B981' },
@@ -211,8 +286,8 @@ export default function DashboardPage() {
               <div key={viagem.id} style={styles.gridItem}>
                 <TripCard
                   viagem={viagem}
-                  onEdit={() => {}}
-                  onDelete={() => {}}
+                  onEdit={handleOpenEdit}
+                  onDelete={handleDelete}
                   style={{ height: '100%' }}
                 />
               </div>
@@ -220,6 +295,122 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* Modal de Edição (Copiado da ViagensPage) */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Editar Detalhes da Viagem"
+      >
+        {formError && (
+          <div style={styles.errorBox}>
+            <AlertCircle size={16} />
+            <span>{formError}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div className="form-group">
+            <label className="form-label">NOME DA VIAGEM *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">DESTINO *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={destino}
+              onChange={(e) => setDestino(e.target.value)}
+              required
+            />
+          </div>
+
+          <div style={styles.formRow}>
+            <div className="form-group">
+              <label className="form-label">DATA DE IDA *</label>
+              <input
+                type="date"
+                className="form-input"
+                value={dataIda}
+                onChange={(e) => setDataIda(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">DATA DE VOLTA *</label>
+              <input
+                type="date"
+                className="form-input"
+                value={dataVolta}
+                onChange={(e) => setDataVolta(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          <div style={styles.formRow}>
+            <div className="form-group">
+              <label className="form-label">ORÇAMENTO PLANEJADO (R$)</label>
+              <input
+                type="number"
+                step="0.01"
+                className="form-input"
+                value={orcamento}
+                onChange={(e) => setOrcamento(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label">STATUS</label>
+              <select
+                className="form-input form-select"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="planejada">Planejada</option>
+                <option value="em_andamento">Em Andamento</option>
+                <option value="concluida">Concluída</option>
+                <option value="cancelada">Cancelada</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">URL DA IMAGEM DA CAPA</label>
+            <input
+              type="text"
+              className="form-input"
+              value={imagemUrl}
+              onChange={(e) => setImagemUrl(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">DESCRIÇÃO DA VIAGEM</label>
+            <textarea
+              className="form-input"
+              value={descricao}
+              onChange={(e) => setDescricao(e.target.value)}
+              style={{ minHeight: '80px', resize: 'vertical' }}
+            />
+          </div>
+
+          <div style={styles.modalFooter}>
+            <button type="button" className="btn btn-outline" onClick={() => setIsModalOpen(false)}>
+              Cancelar
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Atualizar Viagem
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }
@@ -421,5 +612,34 @@ const styles = {
     maxWidth: '450px',
     lineHeight: '1.5',
     marginBottom: '1.25rem',
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  formRow: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '1rem',
+  },
+  errorBox: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+    border: '1px solid var(--danger)',
+    color: '#FC8181',
+    padding: '0.75rem 1rem',
+    borderRadius: 'var(--radius-md)',
+    fontSize: '0.82rem',
+    marginBottom: '1.25rem',
+  },
+  modalFooter: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    gap: '1rem',
+    marginTop: '1.5rem',
+    paddingTop: '1.25rem',
+    borderTop: '1px solid var(--border-color)',
   },
 };
