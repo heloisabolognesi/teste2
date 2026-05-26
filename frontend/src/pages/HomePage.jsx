@@ -247,59 +247,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* IMMERSIVE SECTION - UPDATED TO FOLLOW REFERENCE */}
+      {/* IMMERSIVE SECTION - UPDATED TO FOLLOW REFERENCE WITH ORIGINAL CONTENT */}
       <section style={styles.immersiveSection}>
         <div style={styles.immersiveBg} />
         <div style={styles.immersiveOverlay} />
         <div style={styles.immersiveContent}>
           <div style={styles.immersiveLeft}>
             <h2 style={styles.immersiveTitle}>
-              TRAVEL AND<br />
-              ENJOY THE<br />
-              BEAUTY OF<br />
-              NATURE
+              Transforme Sua Forma<br />
+              de Viajar
             </h2>
             <p style={styles.immersiveDesc}>
-              Bali is an Indonesian island located in Southeast Asia, known for its stunning natural beauty, vibrant culture, and rich history. It is often referred to as the "Island of the Gods" due to its many temples and spiritual significance. Bali features picturesque beaches, lush rice terraces, volcanic mountains, and a lively arts scene. The island is a popular destination for tourists seeking relaxation, adventure, and cultural experiences, with activities ranging from surfing and diving to traditional Balinese dance and ceremonies.
+              Rosa dos Ventos é mais que um planejador de viagens. É uma plataforma completa que te ajuda a organizar roteiros, controlar gastos, salvar favoritos e criar memórias inesquecíveis. Tudo em um só lugar, com tecnologia de ponta e design intuitivo.
             </p>
             <Link to="/register" style={styles.immersiveCTA}>
               COMEÇAR AGORA <ArrowRight size={18} style={{ marginLeft: '8px' }} />
             </Link>
           </div>
           <div style={styles.immersiveRight}>
-            <div style={styles.videoGrid}>
-              <div style={styles.videoCardSmall}>
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  style={styles.videoElement}
-                >
-                  <source src="https://assets.mixkit.co/videos/4521/4521-720.mp4" type="video/mp4" />
-                </video>
-                <div style={styles.videoCardOverlay}>
-                   <div style={styles.playBtnCircle}>
-                     <Play size={20} fill="#FFF" color="#FFF" />
-                   </div>
-                </div>
-              </div>
-              
-              <div style={styles.videoCardSmall}>
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  style={styles.videoElement}
-                >
-                  <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4" type="video/mp4" />
-                </video>
-                <div style={styles.videoCardOverlay}>
-                   <div style={styles.playBtnCircle}>
-                     <Play size={20} fill="#FFF" color="#FFF" />
-                   </div>
-                </div>
+            <div style={styles.videoCardSingle}>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={styles.videoElement}
+              >
+                <source src="https://assets.mixkit.co/videos/4521/4521-720.mp4" type="video/mp4" />
+              </video>
+              <div style={styles.videoCardOverlay}>
+                 <div style={styles.playBtnCircle}>
+                   <Play size={20} fill="#FFF" color="#FFF" />
+                 </div>
               </div>
             </div>
           </div>
@@ -774,19 +753,14 @@ const styles = {
   immersiveRight: {
     flex: 0.8,
   },
-  videoGrid: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2rem',
-  },
-  videoCardSmall: {
+  videoCardSingle: {
     width: '100%',
-    height: '220px',
-    borderRadius: 'var(--radius-md)',
+    height: '400px',
+    borderRadius: 'var(--radius-lg)',
     overflow: 'hidden',
     position: 'relative',
-    boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
-    border: '2px solid rgba(255,255,255,0.2)',
+    boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+    border: '2px solid rgba(255,255,255,0.3)',
   },
   videoElement: {
     width: '100%',
