@@ -34,6 +34,38 @@ export default function DashboardPage() {
     });
   };
 
+  // Processar distribuição de gastos
+  const getGastosData = () => {
+    if (!stats || !stats.gastosPorCategoria || stats.gastosPorCategoria.length === 0) {
+      return [
+        { label: 'Hospedagem', pct: 0, color: '#3B82F6' },
+        { label: 'Transporte', pct: 0, color: '#10B981' },
+        { label: 'Alimentação', pct: 0, color: '#F97316' },
+        { label: 'Outros', pct: 0, color: '#8B5CF6' }
+      ];
+    }
+
+    const total = stats.totalGastos || 1; // evitar divisão por zero
+    const categories = {
+      hospedagem: { label: 'Hospedagem', color: '#3B82F6' },
+      transporte: { label: 'Transporte', color: '#10B981' },
+      alimentacao: { label: 'Alimentação', color: '#F97316' },
+      passeio: { label: 'Passeios', color: '#06B6D4' },
+      compras: { label: 'Compras', color: '#EC4899' },
+      outro: { label: 'Outros', color: '#8B5CF6' }
+    };
+
+    return stats.gastosPorCategoria.map(item => ({
+      label: categories[item.categoria]?.label || item.categoria,
+      pct: Math.round((Number(item.total) / total) * 100),
+      color: categories[item.categoria]?.color || '#64748B'
+    })).sort((a, b) => b.pct - a.pct);
+  };
+
+  const progressoRoteiro = stats?.totalAtividades > 0 
+    ? Math.round((stats.atividadesConcluidas / stats.totalAtividades) * 100)
+    : 0;
+
   if (loading) {
     return (
       <div style={styles.loadingContainer}>
@@ -85,40 +117,40 @@ export default function DashboardPage() {
           color="#F97316"
           subtitle={
             stats?.totalAtividades > 0
-              ? `${Math.round((stats.atividadesConcluidas / stats.totalAtividades) * 100)}% das metas realizadas`
+              ? `${progressoRoteiro}% das metas realizadas`
               : 'Nenhuma tarefa pendente'
           }
         />
       </div>
 
-      {/* Analytics Visuais (Novo) */}
+      {/* Analytics Visuais */}
       <div style={styles.analyticsSection}>
         <div className="glass" style={styles.chartCard}>
           <div style={styles.chartHeader}>
             <div style={styles.chartIconWrapper}>
               <TrendingUp size={18} color="var(--primary)" />
             </div>
-            <h3 style={styles.chartTitle}>Distribuição de Gastos</h3>
+            <h3 style={styles.chartTitle}>Distribuição de Gastos Reais</h3>
           </div>
           <div style={styles.chartContent}>
-            {/* Visualização de Barras Simulada */}
             <div style={styles.barChart}>
-              {[
-                { label: 'Hospedagem', pct: 45, color: '#3B82F6' },
-                { label: 'Transporte', pct: 25, color: '#10B981' },
-                { label: 'Alimentação', pct: 15, color: '#F97316' },
-                { label: 'Outros', pct: 15, color: '#8B5CF6' }
-              ].map((item, idx) => (
-                <div key={idx} style={styles.barItem}>
-                  <div style={styles.barLabelContainer}>
-                    <span style={styles.barLabel}>{item.label}</span>
-                    <span style={styles.barValue}>{item.pct}%</span>
+              {getGastosData().length === 0 || (stats?.totalGastos === 0) ? (
+                <p style={{ color: 'var(--text-muted)', textAlign: 'center', fontSize: '0.85rem' }}>
+                  Nenhum gasto registrado para exibir distribuição.
+                </p>
+              ) : (
+                getGastosData().map((item, idx) => (
+                  <div key={idx} style={styles.barItem}>
+                    <div style={styles.barLabelContainer}>
+                      <span style={styles.barLabel}>{item.label}</span>
+                      <span style={styles.barValue}>{item.pct}%</span>
+                    </div>
+                    <div style={styles.barTrack}>
+                      <div style={{ ...styles.barFill, width: `${item.pct}%`, backgroundColor: item.color }} />
+                    </div>
                   </div>
-                  <div style={styles.barTrack}>
-                    <div style={{ ...styles.barFill, width: `${item.pct}%`, backgroundColor: item.color }} />
-                  </div>
-                </div>
-              ))}
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -132,13 +164,12 @@ export default function DashboardPage() {
           </div>
           <div style={styles.chartContent}>
              <div style={styles.progressCircleContainer}>
-                <div style={styles.progressCircle}>
+                <div style={{
+                  ...styles.progressCircle,
+                  background: `conic-gradient(var(--primary) 0%, var(--primary) ${progressoRoteiro}%, rgba(255,255,255,0.05) ${progressoRoteiro}%, rgba(255,255,255,0.05) 100%)`
+                }}>
                   <div style={styles.progressInner}>
-                    <span style={styles.progressText}>
-                      {stats?.totalAtividades > 0 
-                        ? Math.round((stats.atividadesConcluidas / stats.totalAtividades) * 100)
-                        : 0}%
-                    </span>
+                    <span style={styles.progressText}>{progressoRoteiro}%</span>
                     <span style={styles.progressSubtext}>Concluído</span>
                   </div>
                 </div>
@@ -178,7 +209,6 @@ export default function DashboardPage() {
           <div style={styles.grid}>
             {proximas.map((viagem) => (
               <div key={viagem.id} style={styles.gridItem}>
-                {/* Usando o TripCard básico com ações simuladas leves ou apenas link direto */}
                 <TripCard
                   viagem={viagem}
                   onEdit={() => {}}
@@ -254,7 +284,7 @@ const styles = {
     color: 'var(--text-primary)',
   },
   chartContent: {
-    height: '180px',
+    minHeight: '180px',
     display: 'flex',
     alignItems: 'center',
   },
@@ -302,12 +332,12 @@ const styles = {
     width: '120px',
     height: '120px',
     borderRadius: '50%',
-    background: 'conic-gradient(var(--primary) 0%, var(--primary) 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05) 100%)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
     flexShrink: 0,
+    transition: 'background 1s ease-in-out',
   },
   progressInner: {
     width: '100px',
@@ -360,9 +390,7 @@ const styles = {
     display: 'inline-flex',
     alignItems: 'center',
     transition: 'var(--transition-fast)',
-    ':hover': {
-      color: 'var(--primary-hover)',
-    },
+    textDecoration: 'none',
   },
   grid: {
     display: 'grid',

@@ -38,7 +38,7 @@ exports.getDashboardStats = async (req, res, next) => {
       [userId]
     );
 
-    // 5. Total de atividades pendentes vs concluídas no roteiro geral do usuário (um bônus acadêmico sensacional!)
+    // 5. Total de atividades pendentes vs concluídas no roteiro geral do usuário
     const [atividadesCount] = await db.query(
       `SELECT 
          COUNT(*) as total,
@@ -51,13 +51,26 @@ exports.getDashboardStats = async (req, res, next) => {
     const totalAtividades = atividadesCount[0].total || 0;
     const atividadesConcluidas = Number(atividadesCount[0].concluídas || 0);
 
+    // 6. Distribuição de gastos por categoria
+    const [gastosPorCategoria] = await db.query(
+      `SELECT 
+         g.categoria, 
+         SUM(g.valor) as total 
+       FROM gastos g 
+       JOIN viagens v ON g.id_viagem = v.id 
+       WHERE v.id_usuario = ? 
+       GROUP BY g.categoria`,
+      [userId]
+    );
+
     res.status(200).json({
       stats: {
         totalViagens,
         totalDestinos,
         totalGastos,
         totalAtividades,
-        atividadesConcluidas
+        atividadesConcluidas,
+        gastosPorCategoria
       },
       proximasViagens
     });
