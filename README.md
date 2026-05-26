@@ -114,5 +114,5 @@ O sistema utiliza um modelo relacional robusto com integridade referencial (`ON 
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Heloisa Bolognesi 
 Projeto desenvolvido para fins acadêmicos e práticos de Desenvolvimento de Sistemas com Banco de Dados.
