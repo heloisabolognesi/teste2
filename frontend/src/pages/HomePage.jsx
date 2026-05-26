@@ -85,7 +85,7 @@ export default function HomePage() {
     {
       icon: MapPin,
       title: 'Destinos Curados',
-      description: 'Acesso a mais de 500 destinos selecionados pelo nosso time de especialistas em viagem.',
+      description: 'Acesso a mais de 500 destinos selecionados pelo nosso team de especialistas em viagem.',
     },
     {
       icon: Users,
@@ -247,56 +247,60 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* IMMERSIVE SECTION */}
+      {/* IMMERSIVE SECTION - UPDATED TO FOLLOW REFERENCE */}
       <section style={styles.immersiveSection}>
+        <div style={styles.immersiveBg} />
+        <div style={styles.immersiveOverlay} />
         <div style={styles.immersiveContent}>
           <div style={styles.immersiveLeft}>
             <h2 style={styles.immersiveTitle}>
-              Transforme Sua Forma<br />
-              de Viajar
+              TRAVEL AND<br />
+              ENJOY THE<br />
+              BEAUTY OF<br />
+              NATURE
             </h2>
             <p style={styles.immersiveDesc}>
-              Rosa dos Ventos é mais que um planejador de viagens. É uma plataforma completa que te ajuda a organizar roteiros, controlar gastos, salvar favoritos e criar memórias inesquecíveis. Tudo em um só lugar, com tecnologia de ponta e design intuitivo.
+              Bali is an Indonesian island located in Southeast Asia, known for its stunning natural beauty, vibrant culture, and rich history. It is often referred to as the "Island of the Gods" due to its many temples and spiritual significance. Bali features picturesque beaches, lush rice terraces, volcanic mountains, and a lively arts scene. The island is a popular destination for tourists seeking relaxation, adventure, and cultural experiences, with activities ranging from surfing and diving to traditional Balinese dance and ceremonies.
             </p>
-            <div style={styles.immersiveFeatures}>
-              <div style={styles.featureItem}>
-                <span style={styles.featureCheck}>✓</span>
-                <span>Roteiros personalizados</span>
-              </div>
-              <div style={styles.featureItem}>
-                <span style={styles.featureCheck}>✓</span>
-                <span>Controle de gastos detalhado</span>
-              </div>
-              <div style={styles.featureItem}>
-                <span style={styles.featureCheck}>✓</span>
-                <span>Favoritos sincronizados</span>
-              </div>
-              <div style={styles.featureItem}>
-                <span style={styles.featureCheck}>✓</span>
-                <span>Interface premium e responsiva</span>
-              </div>
-            </div>
             <Link to="/register" style={styles.immersiveCTA}>
               COMEÇAR AGORA <ArrowRight size={18} style={{ marginLeft: '8px' }} />
             </Link>
           </div>
           <div style={styles.immersiveRight}>
-            <div style={styles.videoCard}>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: 'var(--radius-lg)',
-                }}
-              >
-                <source src="https://assets.mixkit.co/videos/4521/4521-720.mp4" type="video/mp4" />
-                Seu navegador não suporta vídeos.
-              </video>
+            <div style={styles.videoGrid}>
+              <div style={styles.videoCardSmall}>
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={styles.videoElement}
+                >
+                  <source src="https://assets.mixkit.co/videos/4521/4521-720.mp4" type="video/mp4" />
+                </video>
+                <div style={styles.videoCardOverlay}>
+                   <div style={styles.playBtnCircle}>
+                     <Play size={20} fill="#FFF" color="#FFF" />
+                   </div>
+                </div>
+              </div>
+              
+              <div style={styles.videoCardSmall}>
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={styles.videoElement}
+                >
+                  <source src="https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4" type="video/mp4" />
+                </video>
+                <div style={styles.videoCardOverlay}>
+                   <div style={styles.playBtnCircle}>
+                     <Play size={20} fill="#FFF" color="#FFF" />
+                   </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -395,10 +399,10 @@ const styles = {
   logo: {
     display: 'flex',
     alignItems: 'center',
-    gap: '0.75rem',
+    gap: '0.5rem',
   },
   logoText: {
-    fontSize: '1.1rem',
+    fontSize: '1.2rem',
     fontWeight: '800',
     letterSpacing: '0.05em',
     color: '#FFF',
@@ -408,51 +412,50 @@ const styles = {
     gap: '2.5rem',
   },
   activeNavLink: {
-    fontSize: '0.85rem',
+    fontSize: '0.9rem',
     fontWeight: '700',
     color: '#FFF',
-    letterSpacing: '0.1em',
+    textDecoration: 'none',
     borderBottom: '2px solid var(--primary)',
     paddingBottom: '4px',
-    cursor: 'pointer',
-    transition: 'var(--transition-fast)',
   },
   navLink: {
-    fontSize: '0.85rem',
+    fontSize: '0.9rem',
     fontWeight: '600',
     color: '#94A3B8',
-    letterSpacing: '0.1em',
-    cursor: 'pointer',
+    textDecoration: 'none',
     transition: 'var(--transition-fast)',
-    ':hover': {
-      color: '#FFF',
-    },
   },
   headerRight: {
     display: 'flex',
     alignItems: 'center',
-    gap: '1.25rem',
+    gap: '1.5rem',
   },
   loginBtn: {
-    padding: '0.45rem 1.25rem',
-    fontSize: '0.85rem',
-    border: '1px solid rgba(255, 255, 255, 0.15)',
+    padding: '0.5rem 1.5rem',
+    fontSize: '0.9rem',
     color: '#FFF',
+    textDecoration: 'none',
+    border: '1px solid rgba(255,255,255,0.2)',
+    borderRadius: 'var(--radius-md)',
   },
   registerBtn: {
-    padding: '0.45rem 1.25rem',
-    fontSize: '0.85rem',
+    padding: '0.5rem 1.5rem',
+    fontSize: '0.9rem',
+    backgroundColor: 'var(--primary)',
+    color: '#FFF',
+    textDecoration: 'none',
+    borderRadius: 'var(--radius-md)',
   },
   heroSection: {
+    height: '80vh',
     position: 'relative',
-    height: '70vh',
-    minHeight: '600px',
     overflow: 'hidden',
   },
   carouselContainer: {
-    position: 'relative',
     width: '100%',
     height: '100%',
+    position: 'relative',
   },
   slide: {
     position: 'absolute',
@@ -460,10 +463,10 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
+    transition: 'opacity 1s ease-in-out',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    transition: 'opacity 1s ease-in-out',
   },
   slideImage: {
     position: 'absolute',
@@ -480,49 +483,47 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(5, 7, 15, 0.5)',
+    background: 'linear-gradient(to bottom, rgba(5,7,15,0.3) 0%, rgba(5,7,15,0.8) 100%)',
   },
   slideContent: {
     position: 'relative',
     zIndex: 2,
     textAlign: 'center',
-    maxWidth: '700px',
-    padding: '2rem',
+    maxWidth: '800px',
+    padding: '0 2rem',
   },
   slideTitle: {
-    fontSize: '4rem',
-    fontWeight: '800',
-    lineHeight: '1.1',
+    fontSize: '5rem',
+    fontWeight: '900',
     marginBottom: '1rem',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    letterSpacing: '-0.02em',
+    textTransform: 'uppercase',
   },
   slideSubtitle: {
-    fontSize: '1.25rem',
-    color: '#94A3B8',
-    marginBottom: '2rem',
+    fontSize: '1.5rem',
+    color: '#CBD5E1',
+    marginBottom: '2.5rem',
   },
   ctaButton: {
     display: 'inline-flex',
     alignItems: 'center',
     backgroundColor: 'var(--primary)',
-    color: '#FFFFFF',
-    padding: '1rem 2.5rem',
+    color: '#FFF',
+    padding: '1.2rem 2.5rem',
     borderRadius: 'var(--radius-full)',
-    fontSize: '0.95rem',
+    fontSize: '1rem',
     fontWeight: '700',
-    boxShadow: '0 4px 15px rgba(37, 99, 235, 0.4)',
-    transition: 'var(--transition)',
     textDecoration: 'none',
+    boxShadow: '0 10px 25px rgba(37, 99, 235, 0.4)',
+    transition: 'var(--transition)',
   },
   carouselControls: {
     position: 'absolute',
-    bottom: '2rem',
+    bottom: '3rem',
     left: '50%',
     transform: 'translateX(-50%)',
     display: 'flex',
-    gap: '0.75rem',
+    gap: '1rem',
     zIndex: 10,
   },
   carouselDot: {
@@ -531,79 +532,74 @@ const styles = {
     borderRadius: '50%',
     border: 'none',
     cursor: 'pointer',
-    transition: 'var(--transition-fast)',
+    transition: 'var(--transition)',
   },
   pickerWrapper: {
     display: 'flex',
     justifyContent: 'center',
-    padding: '0 4rem',
-    marginTop: '-3rem',
+    marginTop: '-4rem',
+    padding: '0 2rem',
     position: 'relative',
     zIndex: 20,
   },
   pickerContainer: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFF',
+    padding: '1rem 1rem 1rem 2.5rem',
     borderRadius: 'var(--radius-full)',
-    padding: '0.6rem 0.6rem 0.6rem 2.5rem',
-    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
+    boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
     width: '100%',
-    maxWidth: '900px',
+    maxWidth: '1000px',
   },
   pickerCol: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.2rem',
-    flex: 1,
+    gap: '0.25rem',
   },
   pickerLabel: {
-    fontSize: '0.7rem',
+    fontSize: '0.75rem',
     fontWeight: '700',
     color: '#94A3B8',
     letterSpacing: '0.05em',
   },
   pickerVal: {
-    fontSize: '0.9rem',
+    fontSize: '1rem',
     fontWeight: '600',
     color: '#0F172A',
     display: 'flex',
     alignItems: 'center',
-    gap: '0.25rem',
+    gap: '0.5rem',
   },
   divider: {
     width: '1px',
-    height: '35px',
+    height: '40px',
     backgroundColor: '#E2E8F0',
     margin: '0 2rem',
   },
   pickerBtn: {
-    backgroundColor: '#2563EB',
-    color: '#FFFFFF',
-    padding: '0.9rem 2.2rem',
+    backgroundColor: 'var(--primary)',
+    color: '#FFF',
+    padding: '1rem 2rem',
     borderRadius: 'var(--radius-full)',
-    fontSize: '0.85rem',
+    fontSize: '0.9rem',
     fontWeight: '700',
+    textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
-    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
-    transition: 'var(--transition)',
-    textDecoration: 'none',
   },
   destSection: {
-    padding: '6rem 4rem 4rem 4rem',
+    padding: '8rem 4rem 4rem',
   },
   sectionHeader: {
     textAlign: 'center',
-    marginBottom: '3rem',
+    marginBottom: '4rem',
   },
   sectionTitle: {
     fontSize: '2.5rem',
     fontWeight: '800',
-    marginBottom: '0.75rem',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    marginBottom: '1rem',
   },
   sectionDesc: {
     fontSize: '1.1rem',
@@ -611,28 +607,20 @@ const styles = {
   },
   destGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '2rem',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '2.5rem',
     maxWidth: '1200px',
     margin: '0 auto',
   },
   destCard: {
-    height: '320px',
+    height: '400px',
     borderRadius: 'var(--radius-lg)',
     overflow: 'hidden',
     position: 'relative',
-    display: 'flex',
-    alignItems: 'flex-end',
-    padding: '1.5rem',
     cursor: 'pointer',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
     transition: 'var(--transition)',
-    border: '1px solid rgba(255,255,255,0.05)',
   },
   destImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
     width: '100%',
     height: '100%',
     backgroundSize: 'cover',
@@ -645,23 +633,22 @@ const styles = {
     left: 0,
     width: '100%',
     height: '100%',
-    background: 'linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.8) 100%)',
-    zIndex: 1,
+    background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8) 100%)',
   },
   destContent: {
-    position: 'relative',
-    zIndex: 2,
-    width: '100%',
+    position: 'absolute',
+    bottom: '2rem',
+    left: '2rem',
+    right: '2rem',
   },
   destName: {
-    fontSize: '1.4rem',
+    fontSize: '1.5rem',
     fontWeight: '700',
-    color: '#FFF',
     marginBottom: '0.25rem',
   },
   destCountry: {
-    fontSize: '0.9rem',
-    color: '#94A3B8',
+    fontSize: '1rem',
+    color: '#CBD5E1',
     marginBottom: '0.75rem',
   },
   destRating: {
@@ -670,32 +657,29 @@ const styles = {
     gap: '0.5rem',
   },
   ratingValue: {
-    fontSize: '0.9rem',
     fontWeight: '700',
-    color: '#FFF',
   },
   reviewCount: {
     fontSize: '0.85rem',
     color: '#94A3B8',
   },
   highlightsSection: {
-    padding: '4rem 4rem 6rem 4rem',
-    backgroundColor: 'rgba(15, 23, 42, 0.3)',
+    padding: '6rem 4rem',
   },
   highlightsGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '2rem',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '3rem',
     maxWidth: '1200px',
     margin: '0 auto',
   },
   highlightCard: {
+    textAlign: 'center',
     padding: '2rem',
     borderRadius: 'var(--radius-lg)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255,255,255,0.03)',
+    border: '1px solid rgba(255,255,255,0.05)',
     transition: 'var(--transition)',
-    textAlign: 'center',
   },
   highlightIconContainer: {
     width: '60px',
@@ -705,62 +689,75 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '0 auto 1rem',
+    margin: '0 auto 1.5rem',
   },
   highlightTitle: {
     fontSize: '1.25rem',
     fontWeight: '700',
-    marginBottom: '0.75rem',
+    marginBottom: '1rem',
   },
   highlightDesc: {
-    fontSize: '0.95rem',
+    fontSize: '1rem',
     color: '#94A3B8',
     lineHeight: '1.6',
   },
   immersiveSection: {
-    padding: '6rem 4rem',
+    padding: '8rem 4rem',
+    position: 'relative',
+    minHeight: '600px',
+    display: 'flex',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  immersiveBg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundImage: `url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=80')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    zIndex: 0,
+  },
+  immersiveOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    zIndex: 1,
   },
   immersiveContent: {
     display: 'flex',
     alignItems: 'center',
-    gap: '4rem',
+    gap: '6rem',
     maxWidth: '1200px',
     margin: '0 auto',
+    position: 'relative',
+    zIndex: 2,
+    width: '100%',
   },
   immersiveLeft: {
-    flex: 1,
+    flex: 1.2,
   },
   immersiveTitle: {
-    fontSize: '3rem',
-    fontWeight: '800',
-    lineHeight: '1.1',
-    marginBottom: '1.5rem',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    fontSize: '4.5rem',
+    fontWeight: '900',
+    lineHeight: '1',
+    marginBottom: '2rem',
+    color: '#FFF',
+    textTransform: 'uppercase',
+    letterSpacing: '-0.02em',
   },
   immersiveDesc: {
-    fontSize: '1.05rem',
-    color: '#94A3B8',
-    lineHeight: '1.8',
-    marginBottom: '2rem',
-  },
-  immersiveFeatures: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-    marginBottom: '2rem',
-  },
-  featureItem: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '1rem',
-    fontSize: '1rem',
-  },
-  featureCheck: {
-    color: 'var(--primary)',
-    fontWeight: '800',
-    fontSize: '1.25rem',
+    fontSize: '1.1rem',
+    color: '#E2E8F0',
+    lineHeight: '1.6',
+    marginBottom: '2.5rem',
+    textAlign: 'justify',
+    maxWidth: '600px',
   },
   immersiveCTA: {
     display: 'inline-flex',
@@ -769,60 +766,57 @@ const styles = {
     color: '#FFFFFF',
     padding: '1rem 2.5rem',
     borderRadius: 'var(--radius-full)',
-    fontSize: '0.95rem',
+    fontSize: '1rem',
     fontWeight: '700',
-    boxShadow: '0 4px 15px rgba(37, 99, 235, 0.4)',
-    transition: 'var(--transition)',
     textDecoration: 'none',
+    boxShadow: '0 10px 30px rgba(37, 99, 235, 0.4)',
   },
   immersiveRight: {
-    flex: 1,
+    flex: 0.8,
   },
-  videoCard: {
+  videoGrid: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2rem',
+  },
+  videoCardSmall: {
     width: '100%',
-    height: '400px',
-    borderRadius: 'var(--radius-lg)',
+    height: '220px',
+    borderRadius: 'var(--radius-md)',
     overflow: 'hidden',
     position: 'relative',
+    boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+    border: '2px solid rgba(255,255,255,0.2)',
+  },
+  videoElement: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+  videoCardOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
-    border: '1px solid rgba(255,255,255,0.1)',
   },
-  videoBg: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  },
-  videoOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  },
-  playBtnContainer: {
-    width: '70px',
-    height: '70px',
+  playBtnCircle: {
+    width: '60px',
+    height: '60px',
     borderRadius: '50%',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     backdropFilter: 'blur(8px)',
-    border: '2px solid rgba(255, 255, 255, 0.4)',
+    border: '2px solid #FFF',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 2,
-    transition: 'var(--transition)',
-    cursor: 'pointer',
   },
   statsSection: {
-    padding: '4rem 4rem 6rem 4rem',
+    padding: '6rem 4rem',
     backgroundColor: 'rgba(37, 99, 235, 0.05)',
   },
   statsGrid: {
@@ -834,88 +828,92 @@ const styles = {
   },
   statCard: {
     textAlign: 'center',
-    padding: '2rem',
+    padding: '2.5rem',
     borderRadius: 'var(--radius-lg)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+    border: '1px solid rgba(255, 255, 255, 0.05)',
   },
   statNumber: {
-    fontSize: '2.5rem',
+    fontSize: '3rem',
     fontWeight: '800',
     color: 'var(--primary)',
     marginBottom: '0.5rem',
   },
   statLabel: {
-    fontSize: '1rem',
+    fontSize: '1.1rem',
     color: '#94A3B8',
   },
   ctaFinalSection: {
-    padding: '6rem 4rem',
+    padding: '8rem 4rem',
     textAlign: 'center',
   },
   ctaFinalContent: {
-    maxWidth: '700px',
+    maxWidth: '800px',
     margin: '0 auto',
   },
   ctaFinalTitle: {
-    fontSize: '2.5rem',
+    fontSize: '3rem',
     fontWeight: '800',
-    marginBottom: '1rem',
-    background: 'linear-gradient(to right, #FFF 40%, #93C5FD 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
+    marginBottom: '1.5rem',
   },
   ctaFinalDesc: {
-    fontSize: '1.1rem',
+    fontSize: '1.2rem',
     color: '#94A3B8',
-    marginBottom: '2rem',
+    marginBottom: '3rem',
     lineHeight: '1.6',
   },
   ctaFinalButtons: {
     display: 'flex',
     gap: '1.5rem',
     justifyContent: 'center',
-    flexWrap: 'wrap',
   },
   ctaFinalBtnPrimary: {
-    padding: '1rem 2.5rem',
-    fontSize: '1rem',
+    padding: '1.2rem 3rem',
+    fontSize: '1.1rem',
+    backgroundColor: 'var(--primary)',
+    color: '#FFF',
+    borderRadius: 'var(--radius-md)',
+    textDecoration: 'none',
   },
   ctaFinalBtnOutline: {
-    padding: '1rem 2.5rem',
-    fontSize: '1rem',
+    padding: '1.2rem 3rem',
+    fontSize: '1.1rem',
+    color: '#FFF',
+    border: '1px solid rgba(255,255,255,0.2)',
+    borderRadius: 'var(--radius-md)',
+    textDecoration: 'none',
   },
   footer: {
-    backgroundColor: 'rgba(15, 23, 42, 0.8)',
+    backgroundColor: '#05070F',
     borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-    padding: '4rem 4rem 2rem',
+    padding: '5rem 4rem 2rem',
   },
   footerContent: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '3rem',
+    gap: '4rem',
     maxWidth: '1200px',
-    margin: '0 auto 2rem',
+    margin: '0 auto 4rem',
   },
   footerSection: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '0.75rem',
+    gap: '1rem',
   },
   footerTitle: {
-    fontSize: '1rem',
+    fontSize: '1.2rem',
     fontWeight: '700',
     marginBottom: '0.5rem',
   },
   footerText: {
-    fontSize: '0.9rem',
+    fontSize: '1rem',
     color: '#94A3B8',
   },
   footerLink: {
-    fontSize: '0.9rem',
+    fontSize: '1rem',
     color: '#94A3B8',
-    transition: 'var(--transition-fast)',
     textDecoration: 'none',
+    transition: 'var(--transition-fast)',
   },
   footerBottom: {
     display: 'flex',
@@ -923,9 +921,7 @@ const styles = {
     alignItems: 'center',
     paddingTop: '2rem',
     borderTop: '1px solid rgba(255, 255, 255, 0.05)',
-    fontSize: '0.85rem',
+    fontSize: '0.9rem',
     color: '#64748B',
-    flexWrap: 'wrap',
-    gap: '1rem',
   },
 };
