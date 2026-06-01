@@ -29,41 +29,33 @@ A **Rosa dos Ventos** é uma plataforma Full Stack projetada para transformar a 
 
 ---
 
-## 🛠️ Stack Tecnológica
+## 📂 Estrutura Detalhada do Projeto
 
-### Frontend
-*   **React 19** (Vite)
-*   **Tailwind CSS** & CSS Customizado
-*   **Lucide React** (Ícones modernos)
-*   **Axios** (Comunicação com API)
-*   **React Router Dom** (Navegação SPA)
+A arquitetura do projeto segue o padrão **Client-Server**, separando claramente as responsabilidades de interface e lógica de dados.
 
-### Backend
-*   **Node.js** & **Express**
-*   **MySQL** (Banco de dados relacional)
-*   **JWT (JSON Web Token)** (Autenticação segura)
-*   **BcryptJS** (Criptografia de senhas)
+### 🖥️ Frontend (`/frontend`)
+O frontend foi desenvolvido com **React** e **Vite**, focado em componentes modulares e alta performance.
 
----
+*   **`src/components/`**: Contém os blocos de construção da interface.
+    *   `TripCard.jsx`: Gerencia a exibição individual de cada viagem e os gatilhos de edição/exclusão.
+    *   `StatCard.jsx`: Componente visual para exibição de métricas numéricas no Dashboard.
+    *   `Modal.jsx`: Estrutura base para todos os formulários pop-up do sistema.
+*   **`src/pages/`**: Define as visualizações completas da aplicação.
+    *   `DashboardPage.jsx`: A tela mais complexa, onde os dados do banco são transformados em gráficos e listas consolidadas.
+    *   `ViagensPage.jsx`: Centraliza a gestão de viagens do usuário.
+    *   `HomePage.jsx` & `AboutPage.jsx`: Páginas institucionais com foco em design e experiência do usuário.
+*   **`src/services/api.js`**: Centraliza a configuração do **Axios**, definindo a URL base do backend e interceptadores para autenticação JWT.
+*   **`src/context/AuthContext.jsx`**: Gerencia o estado global de login do usuário, permitindo que as credenciais persistam entre as páginas.
 
-## 📂 Estrutura do Projeto
+### ⚙️ Backend (`/backend`)
+O backend utiliza **Node.js** com **Express**, servindo como uma API REST que interage diretamente com o MySQL.
 
-```text
-/
-├── frontend/               # Interface do usuário (React)
-│   ├── src/
-│   │   ├── components/     # Componentes reutilizáveis (TripCard, Modal, StatCard)
-│   │   ├── pages/          # Telas (Dashboard, Viagens, About, Home)
-│   │   ├── services/       # Configuração do Axios (api.js)
-│   │   └── App.jsx         # Rotas e estrutura principal
-├── backend/                # Servidor API (Node/Express)
-│   ├── src/
-│   │   ├── config/         # Conexão com MySQL (db.js)
-│   │   ├── controllers/    # Lógica de negócio (dashboard, viagens, auth)
-│   │   ├── routes/         # Definição de Endpoints REST
-│   │   └── app.js          # Ponto de entrada do servidor
-└── schema.sql              # Script de criação e população do banco de dados
-```
+*   **`src/config/db.js`**: Gerencia o **Pool de Conexões** com o MySQL. Utilizar um pool é uma boa prática para evitar sobrecarga no banco de dados.
+*   **`src/controllers/`**: Onde reside a lógica de negócio.
+    *   `dashboardController.js`: Executa queries SQL complexas (com `SUM`, `COUNT` e `GROUP BY`) para alimentar os gráficos do frontend.
+    *   `viagensController.js`: Gerencia o ciclo de vida das viagens (CRUD).
+*   **`src/routes/`**: Mapeia os caminhos da URL para seus respectivos controladores.
+*   **`src/middlewares/auth.js`**: Protege as rotas do sistema, garantindo que apenas usuários logados possam acessar seus próprios dados.
 
 ---
 
