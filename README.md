@@ -100,3 +100,14 @@ Acesse: `http://localhost:5173`
 
 ## 👨‍💻 Autor
 **Heloisa Bolognesi** - Projeto Integrador: Desenvolvimento de Sistemas com Banco de Dados.
+
+---
+
+## 🌐 Implantação (Deployment)
+
+Para colocar este projeto online, recomenda-se a seguinte estratégia:
+1.  **Frontend**: Hospedagem na [Vercel](https://vercel.com).
+2.  **Backend**: Hospedagem no [Render](https://render.com) ou [Railway](https://railway.app).
+3.  **Banco de Dados**: Instância MySQL gerenciada no [Aiven](https://aiven.io) ou [Railway](https://railway.app).
+
+Certifique-se de configurar as variáveis de ambiente (`.env`) em cada plataforma para garantir a conectividade entre os serviços.
