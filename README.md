@@ -1,118 +1,110 @@
-# 🧭 Rosa dos Ventos - Planejador de Viagens
+# 🧭 Rosa dos Ventos - Planejador de Viagens Inteligente
 
-A **Rosa dos Ventos** é uma plataforma completa e imersiva para o planejamento e gestão de viagens. Desenvolvida como um projeto integrador, a aplicação permite que usuários organizem roteiros detalhados, controlem gastos financeiros por categoria e gerenciem seus locais favoritos, tudo em uma interface moderna e intuitiva.
+![Versão](https://img.shields.io/badge/versão-2.0.0-blue)
+![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react)
+![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?logo=node.js)
+![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql)
+
+A **Rosa dos Ventos** é uma plataforma Full Stack projetada para transformar a maneira como as pessoas planejam e gerenciam suas viagens. O sistema oferece desde uma landing page imersiva até um dashboard analítico para controle financeiro e de roteiros.
 
 ---
 
 ## 🚀 Funcionalidades Principais
 
--   **Gestão de Viagens**: Criação, edição e acompanhamento de viagens com status (planejada, em andamento, concluída).
--   **Roteiro Inteligente**: Planejamento cronológico de atividades para cada dia da viagem.
--   **Controle Financeiro**: Gestão de despesas com categorias (alimentação, transporte, etc.) e acompanhamento de orçamento.
--   **Favoritos & Avaliações**: Salve hotéis, restaurantes e pontos turísticos com notas e observações.
--   **Dashboard Imersivo**: Visualização geral de estatísticas e próximas aventuras.
--   **Autenticação Segura**: Sistema de login e cadastro com proteção de rotas e senhas criptografadas.
+### 🏠 Landing Page Premium
+*   **Design Imersivo**: Fundo panorâmico com vídeo de destaque e tipografia moderna.
+*   **Seção Sobre**: Redesenhada com carrossel dinâmico de imagens e seções de Missão e Experiência integradas.
+*   **Destinos em Destaque**: Grid responsivo exibindo as melhores opções de viagem.
+
+### 📊 Dashboard Analítico (Painel de Controle)
+*   **Distribuição de Gastos Reais**: Gráfico dinâmico que calcula automaticamente as porcentagens por categoria (Hospedagem, Transporte, etc.) com base nos dados do banco.
+*   **Progresso de Roteiros**: Gráfico circular que reflete a relação entre atividades concluídas e totais.
+*   **Gastos Consolidados**: Visualização detalhada de gastos individuais (ex: jantares, passagens) de **todas** as viagens do usuário em uma única lista.
+*   **Cards de Métricas**: Resumo de total de viagens, destinos, investimento total e atividades.
+
+### ✈️ Gestão de Viagens (CRUD Completo)
+*   **Planejamento**: Cadastro de novas viagens com orçamento, datas e imagem de capa.
+*   **Edição e Exclusão**: Funcionalidades integradas tanto na página de viagens quanto no Dashboard.
+*   **Roteiro e Gastos**: Gerenciamento individual de cada etapa da aventura.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Stack Tecnológica
 
 ### Frontend
--   **React 19**: Biblioteca principal para construção da interface.
--   **Vite**: Ferramenta de build ultra-rápida.
--   **React Router Dom**: Gestão de rotas e navegação.
--   **Lucide React**: Biblioteca de ícones modernos.
--   **Axios**: Cliente HTTP para consumo da API.
--   **CSS3**: Estilização personalizada com variáveis e design responsivo.
+*   **React 19** (Vite)
+*   **Tailwind CSS** & CSS Customizado
+*   **Lucide React** (Ícones modernos)
+*   **Axios** (Comunicação com API)
+*   **React Router Dom** (Navegação SPA)
 
 ### Backend
--   **Node.js**: Ambiente de execução Javascript no servidor.
--   **Express**: Framework web para criação da API REST.
--   **MySQL**: Banco de dados relacional para persistência de dados.
--   **JWT (JSON Web Token)**: Autenticação baseada em tokens.
--   **BcryptJS**: Criptografia de senhas para segurança.
--   **Dotenv**: Gerenciamento de variáveis de ambiente.
+*   **Node.js** & **Express**
+*   **MySQL** (Banco de dados relacional)
+*   **JWT (JSON Web Token)** (Autenticação segura)
+*   **BcryptJS** (Criptografia de senhas)
 
 ---
 
 ## 📂 Estrutura do Projeto
 
 ```text
-teste2/
-├── backend/            # Servidor Express e lógica de negócio
+/
+├── frontend/               # Interface do usuário (React)
 │   ├── src/
-│   │   ├── config/     # Configuração de banco de dados
-│   │   ├── controllers/# Lógica das rotas
-│   │   ├── middlewares/# Autenticação e erros
-│   │   ├── routes/     # Definição dos endpoints
-│   │   └── app.js      # Arquivo principal
-│   └── .env            # Variáveis de ambiente (DB, JWT)
-├── frontend/           # Aplicação React
+│   │   ├── components/     # Componentes reutilizáveis (TripCard, Modal, StatCard)
+│   │   ├── pages/          # Telas (Dashboard, Viagens, About, Home)
+│   │   ├── services/       # Configuração do Axios (api.js)
+│   │   └── App.jsx         # Rotas e estrutura principal
+├── backend/                # Servidor API (Node/Express)
 │   ├── src/
-│   │   ├── components/ # Componentes reutilizáveis
-│   │   ├── pages/      # Páginas da aplicação
-│   │   ├── context/    # Gestão de estado global (Auth)
-│   │   └── services/   # Configuração do Axios
-│   └── index.html      # Entrada do frontend
-└── schema.sql          # Script de criação do banco de dados
+│   │   ├── config/         # Conexão com MySQL (db.js)
+│   │   ├── controllers/    # Lógica de negócio (dashboard, viagens, auth)
+│   │   ├── routes/         # Definição de Endpoints REST
+│   │   └── app.js          # Ponto de entrada do servidor
+└── schema.sql              # Script de criação e população do banco de dados
 ```
 
 ---
 
-## ⚙️ Como Rodar o Projeto
+## 🗄️ Arquitetura do Banco de Dados (MySQL)
 
-### Pré-requisitos
--   **Node.js** instalado (v18+ recomendado).
--   **MySQL** rodando localmente.
+O sistema utiliza um modelo relacional robusto com integridade referencial.
 
-### 1. Configuração do Banco de Dados
-Execute o script `schema.sql` no seu terminal MySQL ou ferramenta de gestão (como MySQL Workbench):
-```sql
-SOURCE path/to/schema.sql;
-```
-Isso criará o banco `rosa_dos_ventos` e todas as tabelas necessárias (`usuarios`, `viagens`, `roteiro_atividades`, `gastos`, `favoritos`).
+### Relacionamentos:
+*   **Usuários ↔ Viagens**: Relacionamento 1:N (Um usuário possui várias viagens).
+*   **Viagens ↔ Gastos/Roteiros**: Relacionamento 1:N (Uma viagem possui múltiplos registros financeiros e de atividades).
+*   **Integridade**: Uso de `ON DELETE CASCADE` para garantir que a exclusão de uma viagem limpe todos os dados relacionados.
 
-### 2. Configuração do Backend
-Navegue até a pasta `backend`, instale as dependências e configure o ambiente:
+### Tipos de Dados:
+*   **`DECIMAL(10,2)`**: Para precisão em valores monetários.
+*   **`ENUM`**: Para categorias fixas e status de viagem.
+*   **`TIMESTAMP`**: Para auditoria e ordenação cronológica no Dashboard.
+
+---
+
+## 🔧 Como Rodar o Projeto Localmente
+
+### 1. Banco de Dados
+Execute o arquivo `schema.sql` no seu MySQL. Ele já contém **dados de exemplo** para você ver o Dashboard funcionando imediatamente.
+
+### 2. Backend
 ```bash
 cd backend
 npm install
-```
-Crie um arquivo `.env` na raiz da pasta `backend` seguindo este modelo:
-```env
-PORT=5000
-DB_HOST=localhost
-DB_USER=seu_usuario
-DB_PASS=sua_senha
-DB_NAME=rosa_dos_ventos
-JWT_SECRET=sua_chave_secreta_aqui
-```
-Inicie o servidor:
-```bash
+# Configure o arquivo .env com DB_USER, DB_PASS e JWT_SECRET
 npm run dev
 ```
 
-### 3. Configuração do Frontend
-Em um novo terminal, navegue até a pasta `frontend` e instale as dependências:
+### 3. Frontend
 ```bash
 cd frontend
 npm install
-```
-Inicie a aplicação:
-```bash
 npm run dev
 ```
-O projeto estará disponível em `http://localhost:5173`.
+Acesse: `http://localhost:5173`
 
 ---
 
-## 📊 Modelo de Dados
-O sistema utiliza um modelo relacional robusto com integridade referencial (`ON DELETE CASCADE`):
--   **Usuários** possuem muitas **Viagens**.
--   **Viagens** possuem muitos **Gastos**, **Atividades** e **Favoritos**.
--   Valores financeiros utilizam o tipo `DECIMAL(10,2)` para precisão absoluta.
-
----
-
-## 👨‍💻 Heloisa Bolognesi 
-Projeto desenvolvido para fins acadêmicos e práticos de Desenvolvimento de Sistemas com Banco de Dados.
+## 👨‍💻 Autor
+**Heloisa Bolognesi** - Projeto Integrador: Desenvolvimento de Sistemas com Banco de Dados.
